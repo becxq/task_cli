@@ -18,7 +18,7 @@ type Task struct {
 	updatedAt   time.Time
 }
 
-var TaskController = make(map[string]Task)
+var TaskController = make(map[int]Task)
 
 func (t Task) UpdateStatus(status Status) {
 	t.status = status
@@ -27,4 +27,8 @@ func (t Task) UpdateStatus(status Status) {
 
 func (t Task) Show() (string, Status) {
 	return t.description, t.status
+}
+
+func (t Task) Delete() {
+	delete(TaskController, t.id)
 }
