@@ -73,8 +73,14 @@ func (t TaskLister) ShowByStatus(status Status) {
 	}
 }
 
-func (t *TaskLister) Update(status Status, index int) {
+func (t *TaskLister) UpdateStatus(status Status, index int) {
 	t.decode()
 	t.Tasks[index].Status = status
+	t.encode()
+}
+
+func (t *TaskLister) UpdateName(description string, index int) {
+	t.decode()
+	t.Tasks[index].Description = description
 	t.encode()
 }
