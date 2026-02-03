@@ -1,6 +1,9 @@
 package main
 
-import "time"
+import (
+	"time" 
+	"encoding/json"
+)
 
 type Status string
 
@@ -11,14 +14,12 @@ const (
 )
 
 type Task struct {
-	id          int
-	description string
-	status      Status
-	createdAt   time.Time
-	updatedAt   time.Time
+	id          int       `json:"id"`
+	description string    `json:"description"`
+	status      Status    `json:"status"`
+	createdAt   time.Time `json:"createdAt"`
+	updatedAt   time.Time `json:"updatedAt"`
 }
-
-var TaskController = make(map[int]Task)
 
 func (t Task) UpdateStatus(status Status) {
 	t.status = status
@@ -31,4 +32,8 @@ func (t Task) Show() (string, Status) {
 
 func (t Task) Delete() {
 	delete(TaskController, t.id)
+}
+
+func Create(description string, status Status) {
+	TaskController[] = 
 }
