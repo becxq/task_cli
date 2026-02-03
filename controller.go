@@ -18,6 +18,8 @@ type Task struct {
 	updatedAt   time.Time
 }
 
+var TaskController = make(map[string]Task)
+
 func (t Task) UpdateStatus(status Status) {
 	t.status = status
 	t.updatedAt = time.Now()
@@ -26,5 +28,3 @@ func (t Task) UpdateStatus(status Status) {
 func (t Task) Show() (string, Status) {
 	return t.description, t.status
 }
-
-TaskController := make(map[Task.description]Task)
