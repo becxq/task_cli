@@ -1,6 +1,10 @@
 package main
 
 import (
+	"encoding/json"
+	"fmt"
+	"os"
+	"slices"
 	"time"
 )
 
@@ -14,7 +18,7 @@ const ( // enum для статуса
 
 type TaskLister struct { // позволяет удобно взаимодействовать с tasks.json
 	Count int    `json:"count"`
-	Tasks []Task `json:"tasks`
+	Tasks []Task `json:"tasks"`
 }
 
 type Task struct { // отдельный тип для задач
@@ -22,4 +26,53 @@ type Task struct { // отдельный тип для задач
 	Status      Status    `json:"status"`
 	CreatedAt   time.Time `json:"createdAt"`
 	UpdatedAt   time.Time `json:"updatedAt"`
+}
+
+func (t *TaskLister) decode() {
+	read, _ := os.ReadFile("tasks.json")
+	json.Unmarshal(read, t)
+}
+
+func (t *TaskLister) encode() {
+	data, _ := json.Marshal(t)
+
+	os.WriteFile("tasks.json", data, 0644)
+}
+
+func (t *TaskLister) Add(description string) {
+	task := Task{Description: description, Status: ToDo, CreatedAt: time.Now(), UpdatedAt: time.Now()}
+
+	t.decode()
+	t.Tasks = append(t.Tasks, task)
+	t.encode()
+}
+
+func (t *TaskLister) Remove(index int) {
+	t.decode()
+	if index < 0 || index >= len(t.Tasks) {
+		return
+	}
+
+	t.Tasks = slices.Delete(t.Tasks, index, index+1)
+	t.encode()
+}
+
+func (t TaskLister) Show() {
+	t.decode()
+	fmt.Println(t.Tasks)
+}
+
+func (t TaskLister) ShowByStatus(status Status) {
+	t.decode()
+	for _, r := range t.Tasks {
+		if r.Status == status {
+			fmt.Println(r)
+		}
+	}
+}
+
+func (t *TaskLister) Update(status Status, index int) {
+	t.decode()
+	t.Tasks[index].Status = status
+	t.encode()
 }

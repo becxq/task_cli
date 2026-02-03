@@ -1,16 +1,9 @@
 package main
 
-import (
-	"encoding/json"
-	"fmt"
-	"os"
-)
-
 func main() {
-	var taskmanager TaskLister
+	var taskManager TaskLister
+	taskManager.decode()
 
-	data, _ := os.ReadFile("tasks.json")
-	json.Unmarshal(data, &taskmanager)
-
-	fmt.Println(taskmanager.Count)
+	taskManager.Add("Learn Go")
+	taskManager.Show()
 }
