@@ -59,14 +59,16 @@ func (t *TaskLister) Remove(index int) {
 
 func (t TaskLister) Show() {
 	t.decode()
-	fmt.Println(t.Tasks)
+	for _, r := range t.Tasks {
+		fmt.Printf("%s: %s | %s - %s", r.Description, r.Status, r.CreatedAt, r.UpdatedAt)
+	}
 }
 
 func (t TaskLister) ShowByStatus(status Status) {
 	t.decode()
 	for _, r := range t.Tasks {
 		if r.Status == status {
-			fmt.Println(r)
+			fmt.Printf("%s: %s | %s - %s", r.Description, r.Status, r.CreatedAt, r.UpdatedAt)
 		}
 	}
 }
