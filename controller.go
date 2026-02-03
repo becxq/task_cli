@@ -26,17 +26,17 @@ type Task struct {
 }
 
 func (t Task) UpdateStatus(status Status) {
-	t.Status = status
-	t.UpdatedAt = time.Now()
+
 }
 
 func (t Task) Show() (string, Status) {
-	return t.Description, t.Status
+
 }
 
 func (t Task) Delete() {
 
 }
 
-func Create(description string, status Status) {
+func (t TaskLister) Create(description string, status Status) {
+
 }
