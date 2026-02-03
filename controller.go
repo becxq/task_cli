@@ -44,6 +44,7 @@ func (t *TaskLister) Add(description string) {
 
 	t.decode()
 	t.Tasks = append(t.Tasks, task)
+	t.Count++
 	t.encode()
 }
 
@@ -54,13 +55,14 @@ func (t *TaskLister) Remove(index int) {
 	}
 
 	t.Tasks = slices.Delete(t.Tasks, index, index+1)
+	t.Count--
 	t.encode()
 }
 
 func (t TaskLister) Show() {
 	t.decode()
 	for _, r := range t.Tasks {
-		fmt.Printf("%s: %s | %s - %s", r.Description, r.Status, r.CreatedAt, r.UpdatedAt)
+		fmt.Printf("\n%s: %s | %s - %s", r.Description, r.Status, r.CreatedAt.Format("2006-01-02 15:04:05"), r.UpdatedAt.Format("2006-01-02 15:04:05"))
 	}
 }
 
@@ -68,7 +70,7 @@ func (t TaskLister) ShowByStatus(status Status) {
 	t.decode()
 	for _, r := range t.Tasks {
 		if r.Status == status {
-			fmt.Printf("%s: %s | %s - %s", r.Description, r.Status, r.CreatedAt, r.UpdatedAt)
+			fmt.Printf("%s: %s | Created at: %s - Last update at: %s", r.Description, r.Status, r.CreatedAt.Format("2006-01-02 15:04:05"), r.UpdatedAt.Format("2006-01-02 15:04:05"))
 		}
 	}
 }
