@@ -1,8 +1,7 @@
 package main
 
 import (
-	"time" 
-	"encoding/json"
+	"time"
 )
 
 type Status string
@@ -13,27 +12,31 @@ const (
 	Done       Status = "done"
 )
 
+type TaskLister struct {
+	Count int    `json:"count"`
+	Tasks []Task `json: "tasks`
+}
+
 type Task struct {
-	id          int       `json:"id"`
-	description string    `json:"description"`
-	status      Status    `json:"status"`
-	createdAt   time.Time `json:"createdAt"`
-	updatedAt   time.Time `json:"updatedAt"`
+	Id          int       `json:"tasks"`
+	Description string    `json:"tasks"`
+	Status      Status    `json:"tasks"`
+	CreatedAt   time.Time `json:"tasks"`
+	UpdatedAt   time.Time `json:"tasks"`
 }
 
 func (t Task) UpdateStatus(status Status) {
-	t.status = status
-	t.updatedAt = time.Now()
+	t.Status = status
+	t.UpdatedAt = time.Now()
 }
 
 func (t Task) Show() (string, Status) {
-	return t.description, t.status
+	return t.Description, t.Status
 }
 
 func (t Task) Delete() {
-	delete(TaskController, t.id)
+
 }
 
 func Create(description string, status Status) {
-	TaskController[] = 
 }
